@@ -297,6 +297,26 @@ static void check_variables(void)
           overclock_cycles = false;
       }
 
+   var.key = "snes9x_region";
+   var.value = NULL;
+
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+      {
+        if (strcmp(var.value, "NTSC") == 0)
+        {
+	   Settings.PAL =false; 
+	   if (log_cb) log_cb(RETRO_LOG_INFO, "Region:NTSC\n");
+	}
+        else if (strcmp(var.value, "PAL") == 0)
+        {
+           Settings.PAL = true; 
+	   if (log_cb) log_cb(RETRO_LOG_INFO, "Region:PAL\n");
+        }
+        else
+           Settings.PAL = false; 
+	   if (log_cb) log_cb(RETRO_LOG_INFO, "Region:default NTSC\n");
+      }
+
    var.key = "snes9x_next_reduce_sprite_flicker";
    var.value = NULL;
 
@@ -408,6 +428,7 @@ void retro_set_environment(retro_environment_t cb)
       { "snes9x_next_overclock", "SuperFX Overclock; Disabled(10MHz)|40MHz|60MHz|80MHz|100MHz|Underclock(5MHz)|Underclock(8MHz)" },
       { "snes9x_next_overclock_cycles", "Reduce Slowdown (Hack, Unsafe); disabled|compatible|max" },
       { "snes9x_next_reduce_sprite_flicker", "Reduce Flickering (Hack, Unsafe); disabled|enabled" },
+      { "snes9x_region", "Emulation Region; PAL|NTSC" },
       { NULL, NULL },
    };
 
