@@ -304,7 +304,7 @@ static void check_variables(void)
       {
         if (strcmp(var.value, "NTSC") == 0)
         {
-	   Settings.PAL =false; 
+	   Settings.PAL = false; 
 	   if (log_cb) log_cb(RETRO_LOG_INFO, "Region:NTSC\n");
 	}
         else if (strcmp(var.value, "PAL") == 0)
