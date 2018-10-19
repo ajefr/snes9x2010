@@ -313,8 +313,10 @@ static void check_variables(void)
 	   if (log_cb) log_cb(RETRO_LOG_INFO, "Region:PAL\n");
         }
         else
+	{
            Settings.PAL = false; 
 	   if (log_cb) log_cb(RETRO_LOG_INFO, "Region:default NTSC\n");
+	}
       }
 
    var.key = "snes9x_next_reduce_sprite_flicker";
