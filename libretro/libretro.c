@@ -223,6 +223,8 @@ static retro_input_state_t input_cb = NULL;
 static retro_audio_sample_batch_t audio_batch_cb = NULL;
 static retro_environment_t environ_cb = NULL;
 
+static bool use_overscan;
+
 extern s9xcommand_t			keymap[1024];
 bool overclock_cycles = false;
 bool reduce_sprite_flicker = false;
@@ -444,8 +446,6 @@ void retro_set_input_state(retro_input_state_t cb)
 {
    input_cb = cb;
 }
-
-static bool use_overscan;
 
 void retro_set_environment(retro_environment_t cb)
 {
