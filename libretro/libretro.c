@@ -319,6 +319,29 @@ static void check_variables(void)
 	}
       }
 
+   var.key = "snes9x_overscan";
+   var.value = NULL;
+
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+      {
+        if ((strcmp(var.value, "true") == 0)||(strcmp(var.value, "TRUE") == 0))
+        {
+	   use_overscan = true;
+	   if (log_cb) log_cb(RETRO_LOG_INFO, "Overscan:true\n");
+	}
+        else if ((strcmp(var.value, "false") == 0)||(strcmp(var.value, "FALSE") == 0))
+        {
+	   use_overscan = false;
+	   if (log_cb) log_cb(RETRO_LOG_INFO, "Overscan:false\n");
+        }
+        else
+	{
+           use_overscan = false;
+	   if (log_cb) log_cb(RETRO_LOG_INFO, "Overscan:default false\n");
+	}
+      }
+	
+	
    var.key = "snes9x_next_reduce_sprite_flicker";
    var.value = NULL;
 
@@ -431,6 +454,7 @@ void retro_set_environment(retro_environment_t cb)
       { "snes9x_next_overclock_cycles", "Reduce Slowdown (Hack, Unsafe); disabled|compatible|max" },
       { "snes9x_next_reduce_sprite_flicker", "Reduce Flickering (Hack, Unsafe); disabled|enabled" },
       { "snes9x_region", "Emulation Region; PAL|NTSC" },
+      { "snes9x_overscan", "Use overscan; true|false" },
       { NULL, NULL },
    };
 
@@ -710,8 +734,8 @@ void retro_init (void)
    struct retro_log_callback log;
    enum retro_pixel_format rgb565;
    bool achievements             = true;
-   if (!environ_cb(RETRO_ENVIRONMENT_GET_OVERSCAN, &use_overscan))
-	   use_overscan = FALSE;
+//   if (!environ_cb(RETRO_ENVIRONMENT_GET_OVERSCAN, &use_overscan))
+//	   use_overscan = FALSE;
 
    if (environ_cb(RETRO_ENVIRONMENT_GET_LOG_INTERFACE, &log))
       log_cb = log.log;
